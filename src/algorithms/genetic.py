@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class GeneticAlgorithm:
     def __init__(self,
                  population_size,
@@ -62,11 +65,11 @@ class GeneticAlgorithm:
             children = self.mutation.mutate(children)
             [next_population.append(c) for c in children]
 
-        self.population = next_population
+        self.population = np.array(next_population)
 
     def results(self):
         return {
-            'population': self.population,
+            'population': self.representation.decode(self.population),
             'fitness': self.evaluate_population(self.population),
             'iteration': self.iteration,
         }

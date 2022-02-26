@@ -49,6 +49,45 @@ def get_problem(name, *args, d={}, **kwargs):
     return get_from_list(get_problem_options(), name, args, {**d, **kwargs})
 
 
+def get_selection_options():
+    from src.algorithms.utils.selections import RouletteSelection
+    INSTANCES = [
+        ("roulette", RouletteSelection),
+    ]
+
+    return INSTANCES
+
+
+def get_selection(name, *args, d={}, **kwargs):
+    return get_from_list(get_selection_options(), name, args, {**d, **kwargs})
+
+
+def get_crossover_options():
+    from src.algorithms.utils.crossover import OnePointCrossover
+    INSTANCES = [
+        ("onepoint", OnePointCrossover),
+    ]
+
+    return INSTANCES
+
+
+def get_crossover(name, *args, d={}, **kwargs):
+    return get_from_list(get_crossover_options(), name, args, {**d, **kwargs})
+
+
+def get_mutation_options():
+    from src.algorithms.utils.mutation import BinaryMutation
+    INSTANCES = [
+        ("binary", BinaryMutation),
+    ]
+
+    return INSTANCES
+
+
+def get_mutation(name, *args, d={}, **kwargs):
+    return get_from_list(get_mutation_options(), name, args, {**d, **kwargs})
+
+
 def get_representation_options():
     from src.problems.test_functions import Rastrigin, Himmelblau
     instances = [

@@ -19,6 +19,7 @@ class RouletteSelection(Selection):
     def _select(self, population, fitness):
         if self.n_selected is None:
             self.n_selected = population.shape[0]
+        fitness = max(fitness) - fitness
         weights = fitness / sum(fitness)
         ixs = list(range(population.shape[0]))
         selected = np.random.choice(ixs, self.n_selected, p=weights)
