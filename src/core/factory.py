@@ -100,3 +100,16 @@ def get_representation_options():
 
 def get_representation(name, *args, d={}, **kwargs):
     return get_from_list(get_representation_options(), name, args, {**d, **kwargs})
+
+
+def get_elitism_options():
+    from src.algorithms.utils.elitism import Elitism
+    INSTANCES = [
+        ("elitism", Elitism),
+    ]
+
+    return INSTANCES
+
+
+def get_elitism(name, *args, d={}, **kwargs):
+    return get_from_list(get_elitism_options(), name, args, {**d, **kwargs})

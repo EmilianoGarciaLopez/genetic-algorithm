@@ -55,6 +55,9 @@ class GeneticAlgorithm:
         self.iteration += 1
         pop = self.population
         fitness = self.evaluate_population(pop)
+        if self.elitism is not None:
+            self.elitism.select(pop, fitness)
+
         parents = self.selection.select_parents(pop, fitness)
 
         next_population = []
@@ -64,6 +67,9 @@ class GeneticAlgorithm:
             children = self.crossover.crossover(parent_pair)
             children = self.mutation.mutate(children)
             [next_population.append(c) for c in children]
+
+        if self.elitism is not None:
+            next_population = self.elitism.reinsert(next_population)
 
         self.population = np.array(next_population)
 
