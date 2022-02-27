@@ -1,3 +1,5 @@
+import copy
+
 import numpy as np
 
 
@@ -11,6 +13,8 @@ class GeneticAlgorithm:
                  representation,
                  termination=None,
                  ):
+        self.fit_history = []
+        self.pop_history = []
         self.iteration = 0
         self.population_size = population_size
         self.problem = None
@@ -55,6 +59,9 @@ class GeneticAlgorithm:
         self.iteration += 1
         pop = self.population
         fitness = self.evaluate_population(pop)
+
+        self.log(pop, fitness)
+
         if self.elitism is not None:
             self.elitism.select(pop, fitness)
 
@@ -78,4 +85,10 @@ class GeneticAlgorithm:
             'population': self.representation.decode(self.population),
             'fitness': self.evaluate_population(self.population),
             'iteration': self.iteration,
+            'pop_history': self.pop_history,
+            'fit_history': self.fit_history,
         }
+
+    def log(self, population, fitness):
+        self.pop_history.append(copy.deepcopy(self.representation.decode(population)))
+        self.fit_history.append(copy.deepcopy(fitness))
