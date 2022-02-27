@@ -1,17 +1,20 @@
+import numpy as np
+
 from src.algorithms.genetic import GeneticAlgorithm
 from src.algorithms.utils.termination import MaxIter
 from src.core.factory import *
 from src.plot.plot_graph import plot_function
+import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     pop_size = 100
-    problem = get_problem("rastrigin")
+    problem = get_problem("himmelblau")
     binary_rep = get_representation("binary", problem=problem, n_bits=16)
     crossover = get_crossover("onepoint", prob=0.8)
     mutation = get_mutation("binary", prob=(1 / (2 * binary_rep.n_bits)))
     elitism = get_elitism("elitism", prob=0.02)
     selection = get_selection("roulette", n_selected=pop_size)
-    termination = MaxIter(100)
+    termination = MaxIter(50)
 
     ga = GeneticAlgorithm(population_size=pop_size,
                           crossover=crossover,
@@ -26,3 +29,10 @@ if __name__ == "__main__":
     print(min(results['fitness']))
 
     plot_function(problem, results['population'])
+
+    # %%
+    fig, ax = plt.subplots()
+    fitnesses = results['fit_history']
+    min_fitnesses = np.min(fitnesses, axis=1)
+    ax.plot(min_fitnesses)
+    plt.show()

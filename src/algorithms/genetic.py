@@ -85,8 +85,8 @@ class GeneticAlgorithm:
             'population': self.representation.decode(self.population),
             'fitness': self.evaluate_population(self.population),
             'iteration': self.iteration,
-            'pop_history': self.pop_history,
-            'fit_history': self.fit_history,
+            'pop_history': np.array(self.pop_history),
+            'fit_history': np.array(self.fit_history),
         }
 
     def log(self, population, fitness):
