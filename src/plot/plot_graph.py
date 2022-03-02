@@ -12,7 +12,7 @@ def plot_function_animated(problem, pop_hist, sort=False, delta=0.5):
 
     Z_matrix, x1, x2 = mesh_grind(delta, problem)
 
-    contour_data = go.Contour(x=x1, y=x2, z=Z_matrix, colorscale='Viridis', opacity=0.5)
+    contour_data = go.Contour(x=x1, y=x2, z=Z_matrix, colorscale='Viridis', opacity=0.5, visible=True)
 
     polar_pop_hist = np.array([convert_to_polar(pop) for pop in pop_hist])
     sort_population_history(pop_hist, polar_pop_hist if sort else None)
@@ -36,7 +36,7 @@ def plot_function_animated(problem, pop_hist, sort=False, delta=0.5):
                 type="buttons",
                 buttons=[dict(label="Play",
                               method="animate",
-                              args=[None, {"transition": {"duration": 0}}])])]
+                              args=[None, {"transition": {"duration": 0}, "frame": {"redraw": False}}])])]
         ),
         frames=frames
     )
