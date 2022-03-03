@@ -12,23 +12,26 @@ def plot_function_animated(problem, pop_hist, sort=False, delta=0.5):
 
     Z_matrix, x1, x2 = mesh_grind(delta, problem)
 
-    contour_data = go.Contour(x=x1, y=x2, z=Z_matrix, colorscale='Viridis', opacity=0.5, visible=True)
+    contour_data = go.Contour(x=x1, y=x2, z=Z_matrix, colorscale='Viridis', opacity=0.7,
+                              visible=True, contours_coloring='lines')
 
     polar_pop_hist = np.array([convert_to_polar(pop) for pop in pop_hist])
     sort_population_history(pop_hist, polar_pop_hist if sort else None)
 
     frames = []
     for i, pop in enumerate(pop_hist):
-        frames.append(go.Frame(data=[contour_data, go.Scatter(x=pop[:, 0],
-                                                              y=pop[:, 1],
-                                                              mode='markers',
-                                                              opacity=1,
-                                                              marker=dict(size=8),
-                                                              ),
-                                     ], layout=go.Layout(title_text=f'Generation {i}')))
+        frames.append(go.Frame(data=[go.Scatter(x=pop[:, 0],
+                                                y=pop[:, 1],
+                                                mode='markers',
+                                                opacity=1,
+                                                marker=dict(size=8),
+                                                ),
+                                     ],
+                               traces=[3],
+                               layout=go.Layout(title_text=f'Generation {i}')))
 
     fig = go.Figure(
-        data=[contour_data, contour_data],
+        data=[contour_data] * 2,
         layout=go.Layout(
             xaxis=dict(range=[problem.lb, problem.ub], autorange=False),
             yaxis=dict(range=[problem.lb, problem.ub], autorange=False),
@@ -36,10 +39,23 @@ def plot_function_animated(problem, pop_hist, sort=False, delta=0.5):
                 type="buttons",
                 buttons=[dict(label="Play",
                               method="animate",
-                              args=[None, {"transition": {"duration": 0}, "frame": {"redraw": False}}])])]
-        ),
-        frames=frames
+                              args=[None, dict(frame=dict(duration=500, redraw=True),
+                                               fromcurrent=True,
+                                               transition=dict(duration=0, easing='linear')
+                                               )]
+                              ),
+                         dict(label="Pause",
+                              method="animate",
+                              args=[[None],
+                                    dict(frame=dict(duration=0, redraw=False),
+                                         mode='immediate',
+                                         transition=dict(duration=0)
+                                         )],
+                              )])]
+        )
     )
+
+    fig.frames = frames
 
     fig.show()
 
