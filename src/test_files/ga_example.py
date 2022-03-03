@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     pop_size = 100
-    problem = get_problem("himmelblau")
+    problem = get_problem("rastrigin")
     binary_rep = get_representation("binary", problem=problem, n_bits=16)
     crossover = get_crossover("onepoint", prob=0.8)
     mutation = get_mutation("binary", prob=(1 / (2 * binary_rep.n_bits)))

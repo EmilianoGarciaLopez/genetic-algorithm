@@ -4,9 +4,6 @@ import plotly.graph_objects as go
 import numpy as np
 import plotly.io as pio
 
-# import plotly.express as px
-# colors = px.colors.qualitative.Plotly
-
 pio.renderers.default = "browser"
 
 
@@ -42,13 +39,9 @@ class Visualizer:
                 x=pop_hist[0][:, 0],
                 y=pop_hist[0][:, 1],
                 z=fit_hist[0],
-                # hovertext=[f'team {data.get(0)[i].get("swarm")}' for i in range(len(data.get(0)))],
-                # hoverinfo="text",
                 mode="markers",
                 name=f'Population',
                 marker=dict(
-                    # color=[Color(colors[particle_info.get("swarm")], luminance=0.3).get_hex() if particle_info.get(
-                    #     "best") else colors[particle_info.get("swarm")] for particle_info in data.get(0)],
                     size=10)
             ),
             row=1, col=1
@@ -59,22 +52,15 @@ class Visualizer:
                 x=pop_hist[0][:, 0],
                 y=pop_hist[0][:, 1],
                 z=[-2.5 for _ in range(len(fit_hist[0]))],  # TODO: find value
-                # hovertext=[f'team {data.get(0)[i].get("swarm")}' for i in range(len(data.get(0)))],
-                # hoverinfo="text",
                 mode="markers",
                 showlegend=False,
                 marker=dict(
-                    # color=[
-                    #     Color(colors[particle_info.get("swarm")], luminance=0.3).get_hex()
-                    #     if particle_info.get("best") else colors[particle_info.get("swarm")]
-                    #     for particle_info in data.get(0)],
                     size=5)
             ),
             row=1, col=1
         )
 
         # Add each line chart to the figure
-        # counter = 0
         for key, np_fun in zip(["avg", "best", "worst"], [np.mean, np.max, np.min]):
             fig.add_trace(
                 go.Scatter(
@@ -85,7 +71,6 @@ class Visualizer:
                 ),
                 row=1, col=2
             )
-            # counter += 1
 
         sliders_dict = self.create_slider(pop_hist)
 
@@ -103,20 +88,15 @@ class Visualizer:
 
         fig.update_layout(layout)
         fig.update_layout(coloraxis_showscale=False)
-        # fig.update_xaxes(range=[problem.lb, problem.ub], row=1, col=1)
-        # fig.update_yaxes(range=[problem.lb, problem.ub], row=1, col=1)
         fig.update_layout(
             scene=dict(
                 xaxis=dict(range=[problem.lb, problem.ub], ),
                 yaxis=dict(range=[problem.lb, problem.ub], ),
                 zaxis=dict(range=[min(-3, np.min(np.min(Z))), np.max(np.max(Z))], ), ))
-        # fig.update_zaxes(range=[np.min(np.min(Z)), np.max(np.max(Z))], row=1, col=1)
 
         fig.update_xaxes(range=[0, pop_hist.shape[0]], row=1, col=2)
         fig.update_yaxes(range=[0, np.max(np.max(fit_hist)) + 5], row=1, col=2)
         self.fig = fig
-        # fig.show()
-        # fig.write_html("index.html", include_plotlyjs='cdn', include_mathjax=False, auto_play=False)
 
     def create_slider(self, pop_hist):
         sliders_dict = {
@@ -159,23 +139,15 @@ class Visualizer:
                 x=pop_hist[gen][:, 0],
                 y=pop_hist[gen][:, 1],
                 z=fit_hist[gen],
-                # hovertext=[f'team {pop_hist.get(gen)[i].get("swarm")}' for i in range(len(pop_hist.get(0)))],
-                # hoverinfo="text",
                 mode="markers",
                 marker=dict(
-                    # color=[Color(colors[particle_info.get("swarm")], luminance=0.3).get_hex() if particle_info.get(
-                    #     "best") else colors[particle_info.get("swarm")] for particle_info in pop_hist.get(gen)],
                     size=10)),
             go.Scatter3d(
                 x=pop_hist[gen][:, 0],
                 y=pop_hist[gen][:, 1],
                 z=[-2.5 for _ in range(len(fit_hist[gen]))],  # TODO: find value
-                # hovertext=[f'team {pop_hist.get(gen)[i].get("swarm")}' for i in range(len(pop_hist.get(0)))],
-                # hoverinfo="text",
                 mode="markers",
                 marker=dict(
-                    # color=[Color(colors[particle_info.get("swarm")], luminance=0.3).get_hex() if particle_info.get(
-                    #     "best") else colors[particle_info.get("swarm")] for particle_info in pop_hist.get(gen)],
                     size=5))
         ]
 
@@ -221,17 +193,6 @@ class Visualizer:
                               )]
         )
         return layout
-
-    # @staticmethod
-    # def create_map_variables(opti_func):
-    #     x_y_range = np.linspace(Const.MIN_POS, Const.MAX_POS, Const.grid_granularity)
-    #     x_y_range = np.round(x_y_range, decimals=Const.precision)
-    #     X, Y = np.meshgrid(x_y_range, x_y_range)
-    #     Z = np.zeros(shape=(len(x_y_range), len(x_y_range)))
-    #     for x in range(0, len(x_y_range)):
-    #         for y in range(0, len(x_y_range)):
-    #             Z[x, y] = opti_func(np.array([X[x, y], Y[x, y]])[np.newaxis, :].T)
-    #     return X, Y, Z
 
     @staticmethod
     def create_map_variables(delta, problem):
