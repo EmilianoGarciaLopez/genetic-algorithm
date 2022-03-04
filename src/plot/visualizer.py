@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import numpy as np
 import plotly.io as pio
 
-pio.renderers.default = "browser"
+pio.renderers.default = "chrome"
 
 
 class Visualizer:
@@ -27,7 +27,7 @@ class Visualizer:
                             specs=[[{"type": "surface"}, {"type": "scatter"}]])
 
         fig = fig.add_trace(
-            go.Surface(x=X, y=Y, z=Z, colorscale='Viridis', showscale=False, opacity=0.25),
+            go.Surface(x=X, y=Y, z=Z, colorscale='Magma', showscale=False, opacity=0.25),
             row=1, col=1
         )
 
@@ -51,7 +51,7 @@ class Visualizer:
             go.Scatter3d(
                 x=pop_hist[0][:, 0],
                 y=pop_hist[0][:, 1],
-                z=[-2.5 for _ in range(len(fit_hist[0]))],  # TODO: find value
+                z=[-2.5 for _ in range(len(fit_hist[0]))],
                 mode="markers",
                 showlegend=False,
                 marker=dict(
@@ -61,7 +61,7 @@ class Visualizer:
         )
 
         # Add each line chart to the figure
-        for key, np_fun in zip(["avg", "best", "worst"], [np.mean, np.max, np.min]):
+        for key, np_fun in zip(["avg", "best"], [np.mean, np.min]):
             fig.add_trace(
                 go.Scatter(
                     x=[0],
@@ -95,10 +95,11 @@ class Visualizer:
                 zaxis=dict(range=[min(-3, np.min(np.min(Z))), np.max(np.max(Z))], ), ))
 
         fig.update_xaxes(range=[0, pop_hist.shape[0]], row=1, col=2)
-        fig.update_yaxes(range=[0, np.max(np.max(fit_hist)) + 5], row=1, col=2)
+        fig.update_yaxes(range=[0, np.mean(fit_hist[0]) + 2], row=1, col=2)
         self.fig = fig
 
-    def create_slider(self, pop_hist):
+    @staticmethod
+    def create_slider(pop_hist):
         sliders_dict = {
             "active": 0,
             "yanchor": "top",
@@ -151,7 +152,7 @@ class Visualizer:
                     size=5))
         ]
 
-        for key, np_fun in zip(["avg", "best", "worst"], [np.mean, np.max, np.min]):
+        for key, np_fun in zip(["avg", "best"], [np.mean, np.min]):
             ret_list.append(
                 go.Scatter(
                     x=list(range(gen)),
@@ -162,7 +163,8 @@ class Visualizer:
             )
         return ret_list
 
-    def create_layout(self, title):
+    @staticmethod
+    def create_layout(title):
         layout = go.Layout(
             title_text=title,
             updatemenus=[dict(type="buttons",

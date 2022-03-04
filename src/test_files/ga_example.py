@@ -1,10 +1,7 @@
-import numpy as np
-
 from src.algorithms.genetic import GeneticAlgorithm
 from src.algorithms.utils.termination import MaxIter
 from src.core.factory import *
 from src.plot.visualizer import Visualizer
-import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     pop_size = 100
@@ -28,16 +25,5 @@ if __name__ == "__main__":
 
     print(min(results['fitness']))
 
-    # plot_function_animated(problem, results['pop_history'])
-
-    # plot_function(problem)
-
     Visualizer = Visualizer(problem, results['pop_history'], results['fit_history'])
     Visualizer.show_fig()
-
-    # %%
-    # fig, ax = plt.subplots()
-    # fitnesses = results['fit_history']
-    # min_fitnesses = np.min(fitnesses, axis=1)
-    # ax.plot(min_fitnesses)
-    # plt.show()
