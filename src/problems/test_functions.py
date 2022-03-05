@@ -34,3 +34,20 @@ class Himmelblau(Problem):
 
     def himmelblau(self, X):
         return (X[0] ** 2 + X[1] - 11) ** 2 + (X[0] + X[1] ** 2 - 7) ** 2
+
+
+class Ackley(Problem):
+    def __init__(self, dim=2):
+        super().__init__(name='Ackley', fx=self.ackley, lb=-16, ub=16, dim=dim, f_opt=0)
+
+    def ackley(self, X):
+        return -20 * np.exp(-0.2 * np.sqrt(0.5 * (X[0] ** 2 + X[1] ** 2))) - np.exp(
+            0.5 * (np.cos(2 * np.pi * X[0]) + np.cos(2 * np.pi * X[1]))) + np.e + 20
+
+
+class Rosenbrock(Problem):
+    def __init__(self, dim=2):
+        super().__init__(name='Rosenbrock', fx=self.rosenbrock, lb=-4, ub=4, dim=dim, f_opt=0)
+
+    def rosenbrock(self, X):
+        return np.sum(100 * (X[1:] - X[:-1] ** 2) ** 2 + (1 - X[:-1]) ** 2, axis=0)

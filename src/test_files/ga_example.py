@@ -5,7 +5,7 @@ from src.plot.visualizer import Visualizer
 
 if __name__ == "__main__":
     pop_size = 100
-    problem = get_problem("rastrigin")
+    problem = get_problem("rosenbrock")
     binary_rep = get_representation("binary", problem=problem, n_bits=16)
     crossover = get_crossover("onepoint", prob=0.8)
     mutation = get_mutation("binary", prob=(1 / (2 * binary_rep.n_bits)))
@@ -25,5 +25,5 @@ if __name__ == "__main__":
 
     print(min(results['fitness']))
 
-    Visualizer = Visualizer(problem, results['pop_history'], results['fit_history'])
+    Visualizer = Visualizer(problem, results['pop_history'], results['fit_history'], problem.name)
     Visualizer.show_fig()

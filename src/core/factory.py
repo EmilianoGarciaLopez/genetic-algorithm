@@ -1,5 +1,6 @@
 import re
 
+from src.problems.test_functions import Ackley, Rosenbrock
 from src.representations.encodings import BinaryRepresentation
 
 
@@ -40,6 +41,8 @@ def get_problem_options():
     INSTANCES = [
         ("rastrigin", Rastrigin),
         ("himmelblau", Himmelblau),
+        ("ackley", Ackley),
+        ("rosenbrock", Rosenbrock),
     ]
 
     return INSTANCES
