@@ -1,4 +1,4 @@
-# Single-Objective Optimization Genetic Algorithms
+# Single-Objective Optimization: Genetic Algorithms
 
 ### Install Required Packages
 
