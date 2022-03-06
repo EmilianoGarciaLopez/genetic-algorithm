@@ -1,6 +1,6 @@
 import re
 
-from src.problems.test_functions import Ackley, Rosenbrock
+from src.problems.test_functions import Ackley, Rosenbrock, Sphere
 from src.representations.encodings import BinaryRepresentation
 
 
@@ -43,6 +43,7 @@ def get_problem_options():
         ("himmelblau", Himmelblau),
         ("ackley", Ackley),
         ("rosenbrock", Rosenbrock),
+        ("sphere", Sphere),
     ]
 
     return INSTANCES
