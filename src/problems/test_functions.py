@@ -25,7 +25,7 @@ class Rastrigin(Problem):
         super().__init__(name='Rastrigin', fx=self.rastrigin, lb=-5.12, ub=5.12, dim=dim, f_opt=0)
 
     @staticmethod
-    def rastrigin(self, X, A=10):
+    def rastrigin(X, A=10):
         return A * X.shape[0] + np.sum(X ** 2 - A * np.cos(2 * np.pi * X), axis=0)
 
 

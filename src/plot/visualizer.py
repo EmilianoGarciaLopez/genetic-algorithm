@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import numpy as np
 import plotly.io as pio
 
-pio.renderers.default = "chrome"
+pio.renderers.default = "browser"
 
 
 class Visualizer:
