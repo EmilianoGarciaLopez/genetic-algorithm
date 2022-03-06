@@ -2,8 +2,6 @@ import plotly.graph_objects as go
 import plotly.io as pio
 import numpy as np
 
-from src.core.factory import get_problem, get_representation
-
 pio.renderers.default = "browser"
 
 
