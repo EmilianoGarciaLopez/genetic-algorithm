@@ -27,3 +27,4 @@ if __name__ == "__main__":
 
     Visualizer = Visualizer(problem, results['pop_history'], results['fit_history'], problem.name)
     Visualizer.show_fig()
+    # Visualizer.write_fig(write_title="rastrigin")

@@ -54,11 +54,10 @@ class BinaryRepresentation(Representation):
         random_decimal_array = np.random.random(size=(population_size, self.n_vars)) * (self.ub - self.lb) + self.lb
         return self.encode(random_decimal_array)
 
-
-if __name__ == "__main__":
-    problem = Rastrigin()
-    bin_representation = BinaryRepresentation(problem)
-    pop = bin_representation.generate_population(10)
-    print(bin_representation.split_binary_array([0, 0, 0, 1, 0, 1, 0, 0]))
-    encoded = bin_representation.encode(np.array([[2, 2], [5, 5]]))
-    decoded = bin_representation.decode(encoded)
+# if __name__ == "__main__":
+#     problem = Rastrigin()
+#     bin_representation = BinaryRepresentation(problem)
+#     pop = bin_representation.generate_population(10)
+#     print(bin_representation.split_binary_array([0, 0, 0, 1, 0, 1, 0, 0]))
+#     encoded = bin_representation.encode(np.array([[2, 2], [5, 5]]))
+#     decoded = bin_representation.decode(encoded)
