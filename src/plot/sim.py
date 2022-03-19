@@ -1,3 +1,5 @@
+# depreciated
+
 import sys
 import time
 
